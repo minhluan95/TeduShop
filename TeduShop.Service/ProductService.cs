@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using TeduShop.Data.Infrastructure;
 using TeduShop.Data.Repositories;
 using TeduShop.Model.Models;
@@ -12,24 +8,35 @@ namespace TeduShop.Service
     public interface IProductService
     {
         void Add(Product Product);
+
         void Update(Product product);
+
         void Delete(int id);
+
         IEnumerable<Product> GetAll();
+
         IEnumerable<Product> GetAllPaging(int page, int pageSize, out int totalRow);
+
         IEnumerable<Product> GetAllByCategoryPaging(int categoryId, int page, int pageSize, out int totalRow);
+
         IEnumerable<Product> GetAllByTagPaging(string tag, int page, int pageSize, out int totalRow);
+
         Product GetById(int id);
+
         void SaveChanges();
     }
+
     public class ProductService : IProductService
     {
-        ProductRepository _productRepository;
-        UnitOfWork _unitOfWork;
+        private ProductRepository _productRepository;
+        private UnitOfWork _unitOfWork;
+
         public ProductService(ProductRepository productRepository, UnitOfWork unitOfWork)
         {
             this._productRepository = productRepository;
             this._unitOfWork = unitOfWork;
         }
+
         public void Add(Product Product)
         {
             _productRepository.Add(Product);

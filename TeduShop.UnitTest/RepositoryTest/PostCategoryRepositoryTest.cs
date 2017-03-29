@@ -1,5 +1,4 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
 using System.Linq;
 using TeduShop.Data.Infrastructure;
 using TeduShop.Data.Repositories;
@@ -10,9 +9,9 @@ namespace TeduShop.UnitTest.RepositoryTest
     [TestClass]
     public class PostCategoryRepositoryTest
     {
-        IDbFactory dbFactory;
-        IPostCategoryRepository objRepository;
-        IUnitOfWork unitOfWork;
+        private IDbFactory dbFactory;
+        private IPostCategoryRepository objRepository;
+        private IUnitOfWork unitOfWork;
 
         [TestInitialize]
         public void Initialize()

@@ -15,6 +15,6 @@ namespace TeduShop.Model.Models
         public DateTime VisitedDate { set; get; }
 
         [MaxLength(50)]
-        public string IPAddress { set; get; } 
+        public string IPAddress { set; get; }
     }
 }
