@@ -49,7 +49,7 @@ namespace TeduShop.Web.Api
                 }
                 else
                 {
-                    PostCategory postCategoryNew = new PostCategory();
+                    ProductCategory postCategoryNew = new ProductCategory();
                     postCategoryNew.UpdatePostCategory(postCategoryVm);
 
                     var category = _postCategoryService.Add(postCategoryNew);

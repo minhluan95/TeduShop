@@ -5,7 +5,7 @@ namespace TeduShop.Web.Infrastructure.Extensions
 {
     public static class EntityExtensions
     {
-        public static void UpdatePostCategory(this PostCategory postCategory, PostCategoryViewModel postCategoryVm)
+        public static void UpdatePostCategory(this ProductCategory postCategory, PostCategoryViewModel postCategoryVm)
         {
             postCategory.ID = postCategoryVm.ID;
 
