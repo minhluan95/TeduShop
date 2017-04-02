@@ -31,7 +31,7 @@ namespace TeduShop.UnitTest.RepositoryTest
         [TestMethod]
         public void PostCategory_Repository_Create()
         {
-            ProductCategory category = new ProductCategory();
+            PostCategory category = new PostCategory();
             category.Name = "Test category";
             category.Alias = "Test-category";
             category.Status = true;

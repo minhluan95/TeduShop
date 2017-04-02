@@ -7,17 +7,17 @@ namespace TeduShop.Service
 {
     public interface IPostCategoryService
     {
-        ProductCategory Add(ProductCategory PostCategory);
+        PostCategory Add(PostCategory PostCategory);
 
-        void Update(ProductCategory PostCategory);
+        void Update(PostCategory PostCategory);
 
-        ProductCategory Delete(int id);
+        PostCategory Delete(int id);
 
-        IEnumerable<ProductCategory> GetAll();
+        IEnumerable<PostCategory> GetAll();
 
-        IEnumerable<ProductCategory> GetAllByParentId(int ParentId);
+        IEnumerable<PostCategory> GetAllByParentId(int ParentId);
 
-        ProductCategory GetById(int id);
+        PostCategory GetById(int id);
 
         void Save();
     }
@@ -33,27 +33,27 @@ namespace TeduShop.Service
             this._unitOfWork = unitOfWork;
         }
 
-        public ProductCategory Add(ProductCategory PostCategory)
+        public PostCategory Add(PostCategory PostCategory)
         {
             return _postCategoryRepository.Add(PostCategory);
         }
 
-        public ProductCategory Delete(int id)
+        public PostCategory Delete(int id)
         {
             return _postCategoryRepository.Delete(id);
         }
 
-        public IEnumerable<ProductCategory> GetAll()
+        public IEnumerable<PostCategory> GetAll()
         {
             return _postCategoryRepository.GetAll();
         }
 
-        public IEnumerable<ProductCategory> GetAllByParentId(int ParentId)
+        public IEnumerable<PostCategory> GetAllByParentId(int ParentId)
         {
             return _postCategoryRepository.GetMulti(x => x.Status && x.ParentID == ParentId);
         }
 
-        public ProductCategory GetById(int id)
+        public PostCategory GetById(int id)
         {
             return _postCategoryRepository.GetSingleById(id);
         }
@@ -63,7 +63,7 @@ namespace TeduShop.Service
             _unitOfWork.Commit();
         }
 
-        public void Update(ProductCategory PostCategory)
+        public void Update(PostCategory PostCategory)
         {
             _postCategoryRepository.Update(PostCategory);
         }

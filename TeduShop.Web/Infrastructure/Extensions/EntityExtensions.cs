@@ -5,7 +5,7 @@ namespace TeduShop.Web.Infrastructure.Extensions
 {
     public static class EntityExtensions
     {
-        public static void UpdatePostCategory(this ProductCategory postCategory, PostCategoryViewModel postCategoryVm)
+        public static void UpdatePostCategory(this PostCategory postCategory, PostCategoryViewModel postCategoryVm)
         {
             postCategory.ID = postCategoryVm.ID;
 
@@ -32,6 +32,35 @@ namespace TeduShop.Web.Infrastructure.Extensions
             postCategory.MetaDescription = postCategoryVm.MetaDescription;
 
             postCategory.MetaKeyword = postCategoryVm.MetaKeyword;
+        }
+
+        public static void UpdateProductCategory(this ProductCategory productCategory, ProductCategoryViewModel productCategoryVm)
+        {
+            productCategory.ID = productCategoryVm.ID;
+
+            productCategory.Name = productCategoryVm.Name;
+
+            productCategory.Description = productCategoryVm.Description;
+
+            productCategory.Alias = productCategoryVm.Alias;
+
+            productCategory.ParentID = productCategoryVm.ParentID;
+
+            productCategory.DisplayOrder = productCategoryVm.DisplayOrder;
+
+            productCategory.Image = productCategoryVm.Image;
+
+            productCategory.CreatedBy = productCategoryVm.CreatedBy;
+
+            productCategory.CreatedDate = productCategoryVm.CreatedDate;
+
+            productCategory.UpdatedBy = productCategoryVm.UpdatedBy;
+
+            productCategory.UpdatedDate = productCategoryVm.UpdatedDate;
+
+            productCategory.MetaDescription = productCategoryVm.MetaDescription;
+
+            productCategory.MetaKeyword = productCategoryVm.MetaKeyword;
         }
 
         public static void UpdatePost(this Post post, PostViewModel postVm)
