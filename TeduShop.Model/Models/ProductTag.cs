@@ -19,6 +19,6 @@ namespace TeduShop.Model.Models
         public virtual Tag Tag { set; get; }
 
         [ForeignKey("ProductID")]
-        public virtual Product Product { set; get; }
+        public virtual ProductCategory Product { set; get; }
     }
 }

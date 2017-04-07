@@ -23,7 +23,9 @@ namespace TeduShop.Model.Models
         public int CategoryID { set; get; }
 
         public int? Warranty { set; get; }
+
         public decimal? PromotionPrice { set; get; }
+
         public decimal Price { set; get; }
 
         [MaxLength(256)]
@@ -33,12 +35,15 @@ namespace TeduShop.Model.Models
         public string MoreImages { set; get; }
 
         public string Description { set; get; }
+
         public string Content { set; get; }
-        public int? HotFlag { set; get; }
+
+        public bool? HotFlag { set; get; }
+
         public int? ViewCount { set; get; }
 
         [ForeignKey("CategoryID")]
-        public virtual ProductCategory ProductCategory { set; get; }
+        public virtual ProductCategory ProductCategories { set; get; }
 
         //public virtual IEnumerable<OrderDetail> OrderDetails { set; get; }
         //public virtual IEnumerable<ProductTag> ProductTags { set; get; }

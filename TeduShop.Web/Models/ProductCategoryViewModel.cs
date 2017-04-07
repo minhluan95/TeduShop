@@ -8,10 +8,10 @@ namespace TeduShop.Web.Models
     {
         public int ID { set; get; }
 
-        [Required]
+        [Required(ErrorMessage ="Tên danh mục bắt buộc nhập")]
         public string Name { set; get; }
 
-        [Required]
+        [Required(ErrorMessage = "Tiêu đề SEO bắt buộc nhập")]
         public string Alias { set; get; }
 
         public string Description { set; get; }
@@ -36,7 +36,8 @@ namespace TeduShop.Web.Models
         public string MetaKeyword { set; get; }
 
         public string MetaDescription { set; get; }
-        [Required]
+
+        [Required(ErrorMessage = "Trạng thái bắt buộc chọn")]
         public bool Status { set; get; }
     }
 }

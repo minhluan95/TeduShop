@@ -10,6 +10,8 @@ using TeduShop.Service;
 using TeduShop.Web.Infrastructure.Core;
 using TeduShop.Web.Models;
 using TeduShop.Web.Infrastructure.Extensions;
+using System.Web.Script.Serialization;
+
 namespace TeduShop.Web.Api
 {
     [RoutePrefix("api/productcategory")]
@@ -24,6 +26,22 @@ namespace TeduShop.Web.Api
             this._productCategoryService = productCategoryService;
         }
         #endregion
+
+        [Route("getallparents")]
+        [HttpGet]
+        public HttpResponseMessage GetAll(HttpRequestMessage request)
+        {
+            return CreateHttpResponse(request, () =>
+            {
+                var model = _productCategoryService.GetAll();
+
+                var responseData = Mapper.Map<IEnumerable<ProductCategory>, IEnumerable<ProductCategoryViewModel>>(model);
+
+                var response = request.CreateResponse(HttpStatusCode.OK, responseData);
+
+                return response;
+            });
+        }
 
         [Route("getall")]
         [HttpGet]
@@ -69,22 +87,7 @@ namespace TeduShop.Web.Api
             });
         }
 
-        [Route("getallparents")]
-        [HttpGet]
-        public HttpResponseMessage GetAll(HttpRequestMessage request)
-        {
-            return CreateHttpResponse(request, () =>
-            {
-                var model = _productCategoryService.GetAll();
-
-                var responseData = Mapper.Map<IEnumerable<ProductCategory>, IEnumerable<ProductCategoryViewModel>>(model);
-
-                var response = request.CreateResponse(HttpStatusCode.OK, responseData);
-                return response;
-            });
-        }
-
-        [Route("Create")]
+        [Route("create")]
         [HttpPost]
         [AllowAnonymous]
         public HttpResponseMessage Create(HttpRequestMessage request, ProductCategoryViewModel productCategoryVm)
@@ -132,6 +135,62 @@ namespace TeduShop.Web.Api
                     var responseData = Mapper.Map<ProductCategory, ProductCategoryViewModel>(dbProductCategory);
                     response = request.CreateResponse(HttpStatusCode.Created, responseData);
                 }
+                return response;
+            });
+        }
+
+
+        [Route("delete")]
+        [HttpDelete]
+        [AllowAnonymous]
+        public HttpResponseMessage Delete(HttpRequestMessage request, int id)
+        {
+            return CreateHttpResponse(request, () =>
+            {
+                HttpResponseMessage response = null;
+                if (!ModelState.IsValid)
+                {
+                    response = request.CreateResponse(HttpStatusCode.BadRequest, ModelState);
+                }
+                else
+                {
+                    var oldProductCateogry =  _productCategoryService.Delete(id);
+
+                    _productCategoryService.Save();
+
+                    var responseData = Mapper.Map<ProductCategory, ProductCategoryViewModel>(oldProductCateogry);
+
+                    response = request.CreateResponse(HttpStatusCode.Created, responseData);
+                }
+                return response;
+            });
+        }
+
+        [Route("deletemulti")]
+        [HttpDelete]
+        [AllowAnonymous]
+        public HttpResponseMessage DeleteMulti(HttpRequestMessage request, string checkedProductCategories)
+        {
+            return CreateHttpResponse(request, () =>
+            {
+                HttpResponseMessage response = null;
+                if (!ModelState.IsValid)
+                {
+                    response = request.CreateResponse(HttpStatusCode.BadRequest, ModelState);
+                }
+                else
+                {
+                    var listProductCategory = new JavaScriptSerializer().Deserialize<List<int>>(checkedProductCategories);
+                    foreach (var item in listProductCategory)
+                    {
+                        _productCategoryService.Delete(item);
+                    }
+
+                    _productCategoryService.Save();
+
+                    response = request.CreateResponse(HttpStatusCode.OK, listProductCategory.Count);
+                }
+
                 return response;
             });
         }

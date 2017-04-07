@@ -7,80 +7,69 @@ namespace TeduShop.Service
 {
     public interface IProductService
     {
-        void Add(Product Product);
+        Product Add(Product Product);
 
-        void Update(Product product);
+        void Update(Product Product);
 
-        void Delete(int id);
+        Product Delete(int id);
 
         IEnumerable<Product> GetAll();
 
-        IEnumerable<Product> GetAllPaging(int page, int pageSize, out int totalRow);
-
-        IEnumerable<Product> GetAllByCategoryPaging(int categoryId, int page, int pageSize, out int totalRow);
-
-        IEnumerable<Product> GetAllByTagPaging(string tag, int page, int pageSize, out int totalRow);
+        IEnumerable<Product> GetAll(string keyword);
 
         Product GetById(int id);
 
-        void SaveChanges();
+        void Save();
     }
 
     public class ProductService : IProductService
     {
-        private ProductRepository _productRepository;
-        private UnitOfWork _unitOfWork;
+        private IProductRepository _productRepository;
+        private IUnitOfWork _unitOfWork;
 
-        public ProductService(ProductRepository productRepository, UnitOfWork unitOfWork)
+        public ProductService(IProductRepository productRepository, IUnitOfWork unitOfWork)
         {
             this._productRepository = productRepository;
             this._unitOfWork = unitOfWork;
         }
 
-        public void Add(Product Product)
+        public Product Add(Product Product)
         {
-            _productRepository.Add(Product);
+            return _productRepository.Add(Product);
         }
 
-        public void Delete(int id)
+        public Product Delete(int id)
         {
-            _productRepository.Delete(id);
+            return _productRepository.Delete(id);
         }
 
         public IEnumerable<Product> GetAll()
         {
-            return _productRepository.GetAll(new string[] { "ProductCategory" });
+            return _productRepository.GetAll();
         }
 
-        public IEnumerable<Product> GetAllByCategoryPaging(int categoryId, int page, int pageSize, out int totalRow)
+        public IEnumerable<Product> GetAll(string keyword)
         {
-            return _productRepository.GetMultiPaging(x => x.Status && x.CategoryID == categoryId, out totalRow, page, pageSize, new string[] { "PostCategory" });
+            if (!string.IsNullOrEmpty(keyword))
+                return _productRepository.GetMulti(x => x.Name.Contains(keyword) || x.Description.Contains(keyword));
+            else
+                return _productRepository.GetAll();
         }
 
-        public IEnumerable<Product> GetAllByTagPaging(string tag, int page, int pageSize, out int totalRow)
-        {
-            //TODO: Select all post by tag
-            return _productRepository.GetMultiPaging(x => x.Status, out totalRow, page, pageSize);
-        }
-
-        public IEnumerable<Product> GetAllPaging(int page, int pageSize, out int totalRow)
-        {
-            return _productRepository.GetMultiPaging(x => x.Status, out totalRow, page, pageSize);
-        }
 
         public Product GetById(int id)
         {
             return _productRepository.GetSingleById(id);
         }
 
-        public void SaveChanges()
+        public void Save()
         {
             _unitOfWork.Commit();
         }
 
-        public void Update(Product product)
+        public void Update(Product Product)
         {
-            _productRepository.Update(product);
+            _productRepository.Update(Product);
         }
     }
 }

@@ -61,6 +61,8 @@ namespace TeduShop.Web.Infrastructure.Extensions
             productCategory.MetaDescription = productCategoryVm.MetaDescription;
 
             productCategory.MetaKeyword = productCategoryVm.MetaKeyword;
+
+            productCategory.Status = productCategoryVm.Status;
         }
 
         public static void UpdatePost(this Post post, PostViewModel postVm)
@@ -94,6 +96,51 @@ namespace TeduShop.Web.Infrastructure.Extensions
             post.MetaDescription = postVm.MetaDescription;
 
             post.MetaKeyword = postVm.MetaKeyword;
+        }
+        public static void UpdateProduct(this Product product, ProductViewModel productVm)
+        {
+            product.ID = productVm.ID;
+
+            product.Name = productVm.Name;
+
+            product.CategoryID = productVm.CategoryID;
+
+            product.Warranty = productVm.Warranty;
+
+            product.PromotionPrice = productVm.PromotionPrice;
+
+            product.Price = productVm.Price;
+
+            product.Alias = productVm.Alias;
+
+            product.Image = productVm.Image;
+
+            product.MoreImages = productVm.MoreImages;
+
+            product.Description = productVm.Description;
+
+            product.Content = productVm.Content;
+
+            product.HotFlag = productVm.HotFlag;
+
+            product.HomeFlag = productVm.HomeFlag;
+
+            product.ViewCount = productVm.ViewCount;
+
+            product.CreatedBy = productVm.CreatedBy;
+
+            product.CreatedDate = productVm.CreatedDate;
+
+            product.UpdatedBy = productVm.UpdatedBy;
+
+            product.UpdatedDate = productVm.UpdatedDate;
+
+            product.MetaDescription = productVm.MetaDescription;
+
+            product.MetaKeyword = productVm.MetaKeyword;
+
+            product.Status = productVm.Status;
+
         }
     }
 }

@@ -15,15 +15,15 @@ namespace TeduShop.Web.Models
 
         public int CategoryID { set; get; }
 
+        public int? Warranty { set; get; }
+
+        public decimal? PromotionPrice { set; get; }
+
         public string Image { set; get; }
 
         public string MoreImages { set; get; }
 
         public decimal Price { set; get; }
-
-        public decimal? PromotionPrice { set; get; }
-
-        public int? Warranty { set; get; }
 
         public string Description { set; get; }
 
