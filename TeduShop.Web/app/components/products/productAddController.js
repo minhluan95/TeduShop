@@ -6,10 +6,13 @@
         $scope.product =
         {
             CreatedDate: new Date(),
-            Status: true
+            Status: true,
+            HomeFlag: false,
+            HotFlag: false,
         }
         $scope.AddProduct = AddProduct;
         function AddProduct() {
+            $scope.product.MoreImages = JSON.stringify($scope.moreImages);
             apiService.post('api/product/create', $scope.product,
                 function (result) {
                     notificationService.displaySuccess(result.data.Name + ' đã được thêm mới');
@@ -39,16 +42,27 @@
             height: '200px'
         };
 
-        $scope.ChooseImage = function()
-        {
+        $scope.ChooseImage = function () {
             var finder = new CKFinder();
-            finder.selectActionFunction =function(fileUrl)
-            {
-                $scope.product.Image = fileUrl;
+            finder.selectActionFunction = function (fileUrl) {
+                $scope.$apply(function () {
+                    $scope.product.Image = fileUrl;
+                })
+            }
+            finder.popup();
+        }
+        $scope.moreImages = [];
+
+        $scope.ChooseMoreImage = function () {
+            var finder = new CKFinder();
+            finder.selectActionFunction = function (fileUrl) {
+                $scope.$apply(function () {
+                    $scope.moreImages.push(fileUrl);
+                })
             }
             finder.popup();
         }
 
-    loadCategory();
-}
+        loadCategory();
+    }
 })(angular.module('tedushop.products'));

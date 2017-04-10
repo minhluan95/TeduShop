@@ -141,6 +141,8 @@ namespace TeduShop.Web.Infrastructure.Extensions
 
             product.Status = productVm.Status;
 
+            product.Tags = productVm.Tags;
+
         }
     }
 }

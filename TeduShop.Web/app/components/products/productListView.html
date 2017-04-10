@@ -3,9 +3,8 @@
         Sản phẩm
     </h1>
     <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li><a href="#">Sản phẩm</a></li>
-        <li class="active">Danh sách sản phẩm</li>
+        <li><a href="#"><i class="fa fa-dashboard"></i> Trang chủ</a></li>
+        <li ui-sref="products" class="active">Danh sách sản phẩm</li>
     </ol>
 </section>
 <!-- Main content -->
@@ -13,7 +12,7 @@
     <!-- Default box -->
     <div class="box">
         <div class="box-header with-border">
-            <h3 class="box-title">Title</h3>
+            <h3 class="box-title">Danh sách sản phẩm</h3>
             <div class="box-tools pull-right">
                 <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
                     <i class="fa fa-minus"></i>
@@ -43,11 +42,12 @@
                     <table class="table table-bordered">
                         <tr>
                             <th style="width: 5%"><input name="all" type="checkbox" ng-click="selectAll()" /></th>
-                            <th style="width: 5%">ID</th>
+                            <th style="width: 5%">Mã</th>
                             <th style="width: 20%">Tên sản phẩm</th>
-                            <th style="width: 15%">Danh mục</th>
-                            <th style="width: 15%">Ngày tạo</th>
-                            <th style="width: 10%">Trạng thái</th>
+                            <th style="width: 10%">Ngày tạo</th>
+                            <th style="width: 20%">Từ khoá</th>
+                            <th style="width: 5%">Trạng thái</th>
+                            <th style="width: 12%">Hiển thị trang chủ</th>
                             <th style="width: 10%">Thao tác</th>
                         </tr>
                         <tr ng-repeat="item in products">
@@ -58,16 +58,21 @@
                                 {{item.CreatedDate | date:'dd/MM/yyyy hh:ss'}}
                             </td>
                             <td>
-                                <!--class="badge bg-red"-->
+                                {{item.Tags}}
+                            </td>
+                            <td>
                                 <span ng-class="{'badge bg-green':item.Status==true,'badge bg-red':item.Status ==false}">{{item.Status | filterStatus}}</span>
                             </td>
                             <td>
-                                <button class="btn btn-sm btn-primary" ui-sref="edit_product ({id:item.ID})"><i class="fa fa-pencil"></i></button>
+                                <span ng-class="{'badge bg-green':item.HomeFlag==true,'badge bg-red':item.HomeFlag ==false}">{{item.HomeFlag | filterStatus}}</span>
+                            </td>
+                            <td>
+                                <button class="btn btn-sm btn-primary" ui-sref="product_edit ({id:item.ID})"><i class="fa fa-pencil"></i></button>
                                 <button class="btn btn-sm btn-danger" ng-click="deleteProduct(item.ID)"><i class="fa fa-trash"></i></button>
                             </td>
                         </tr>
                         <tr>
-                            <td colspan="7">
+                            <td colspan="9">
                                 <span class="pull-right">Trang: {{page+1}} - Tổng số bản ghi: {{totalCount}}</span>
                             </td>
                         </tr>
