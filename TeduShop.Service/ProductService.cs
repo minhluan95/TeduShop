@@ -28,13 +28,19 @@ namespace TeduShop.Service
 
         IEnumerable<string> GetListProductByName(string name);
 
-        IEnumerable<Product> GetReatedProducts(int id,int top);
+        IEnumerable<Product> GetReatedProducts(int id, int top);
 
         IEnumerable<Product> Search(string keyword, int page, int pageSize, string sort, out int totalRow);
 
         Product GetById(int id);
 
         void Save();
+
+        IEnumerable<Tag> GetListTagByProductId(int id);
+
+        void IncreaseView(int id);
+
+        IEnumerable<Product> GetListProductByTag(string tagId, int page, int pageSize, out int totalRow);
     }
 
     public class ProductService : IProductService
@@ -141,10 +147,32 @@ namespace TeduShop.Service
             return _productRepository.GetMulti(x => x.Status && x.Name.Contains(name)).Select(y => y.Name);
         }
 
+        public IEnumerable<Product> GetListProductByTag(string tagId, int page, int pageSize, out int totalRow)
+        {
+            var model = _productRepository.GetMulti(x => x.Status && x.ProductTags.Count(y => y.ProductID == x.ID) > 0, new string[] { "ProductCategory", "ProductTag" }).OrderByDescending(x => x.CreatedDate).Skip((page - 1) * pageSize).Take(pageSize);
+            totalRow = model.Count();
+
+            return model.OrderByDescending(x => x.CreatedDate).Skip((page - 1) * pageSize).Take(pageSize);
+        }
+
+        public IEnumerable<Tag> GetListTagByProductId(int id)
+        {
+            return _productTagRepository.GetMulti(x => x.ProductID == id, new string[] { "Tag" }).Select(y => y.Tag);
+        }
+
         public IEnumerable<Product> GetReatedProducts(int id, int top)
         {
             var product = _productRepository.GetSingleById(id);
             return _productRepository.GetMulti(x => x.Status && x.ID != id && x.CategoryID == product.CategoryID).OrderByDescending(x => x.CreatedDate).Take(top);
+        }
+
+        public void IncreaseView(int id)
+        {
+            var product = _productRepository.GetSingleById(id);
+            if (product.ViewCount.HasValue)
+                product.ViewCount += 1;
+            else
+                product.ViewCount = 1;
         }
 
         public void Save()

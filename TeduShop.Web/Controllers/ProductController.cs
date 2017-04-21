@@ -27,11 +27,14 @@ namespace TeduShop.Web.Controllers
         {
             var productModel = _productService.GetById(id);
             var viewModel = Mapper.Map<Product, ProductViewModel>(productModel);
+
             var relatedProduct = _productService.GetReatedProducts(id, 6);
             ViewBag.RelatedProducts = Mapper.Map<IEnumerable<Product>, IEnumerable<ProductViewModel>>(relatedProduct);
 
             List<string> listImages = new JavaScriptSerializer().Deserialize<List<string>>(viewModel.MoreImages);
             ViewBag.MoreImages = listImages;
+
+            ViewBag.Tags = Mapper.Map<IEnumerable<Tag>, IEnumerable<TagViewModel>>(_productService.GetListTagByProductId(id));
             return View(viewModel);
         }
         public ActionResult Category(int id, int page = 1, string sort = "")
